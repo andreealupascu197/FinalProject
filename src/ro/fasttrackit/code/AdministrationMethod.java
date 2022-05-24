@@ -25,4 +25,12 @@ public class AdministrationMethod {
         return beforeEating;
     }
 
+    @Override
+    public String toString() {
+        return "AdministrationMethod{" +
+                "frequency=" + frequency +
+                ", timeOfDay=" + timeOfDay +
+                ", beforeEating=" + beforeEating +
+                '}';
+    }
 }
