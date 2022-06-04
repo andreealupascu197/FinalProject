@@ -43,8 +43,8 @@ public class Medication {
         return type;
     }
 
-    public void consume() {
-        quantity--;
+    public int consume() {
+       return --quantity;
     }
 
     public AdministrationMethod getAdministrationMethod() {

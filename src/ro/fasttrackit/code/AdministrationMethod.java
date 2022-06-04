@@ -4,12 +4,12 @@ import java.util.List;
 
 public class AdministrationMethod {
     private final Integer frequency;
-    private final List<TimeOfDay> timeOfDay;
+    private final List<TimeOfDay> timesOfDay;
     private final Boolean beforeEating;
 
     public AdministrationMethod(int frequency, List<TimeOfDay> timeOfDay, Boolean beforeEating) {
         this.frequency = frequency;
-        this.timeOfDay = timeOfDay;
+        this.timesOfDay = timeOfDay;
         this.beforeEating = beforeEating;
     }
 
@@ -17,8 +17,8 @@ public class AdministrationMethod {
         return frequency;
     }
 
-    public List<TimeOfDay> getTimeOfDay() {
-        return timeOfDay;
+    public List<TimeOfDay> getTimesOfDay() {
+        return timesOfDay;
     }
 
     public Boolean getBeforeEating() {
@@ -29,7 +29,7 @@ public class AdministrationMethod {
     public String toString() {
         return "AdministrationMethod{" +
                 "frequency=" + frequency +
-                ", timeOfDay=" + timeOfDay +
+                ", timeOfDay=" + timesOfDay +
                 ", beforeEating=" + beforeEating +
                 '}';
     }

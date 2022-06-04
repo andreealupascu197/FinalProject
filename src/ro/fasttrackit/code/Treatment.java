@@ -1,7 +1,11 @@
 package ro.fasttrackit.code;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Treatment {
@@ -12,7 +16,7 @@ public class Treatment {
     }
 
     public List<Medication> getMedication() {
-        return medicationList;
+        return Collections.unmodifiableList(medicationList);
     }
 
     @Override
@@ -23,42 +27,32 @@ public class Treatment {
     }
 
     public void addMedication(Medication medication) {
-        boolean wasFound = false;
+        //  boolean wasFound = false;
         for (Medication medicaments : medicationList) {
             if (medicaments.getName().equals(medication.getName())) {
-                wasFound = true;
+                // wasFound = true;
                 System.out.println("Medicament is already added");
+                return;
             }
         }
-        if (!wasFound) {
-            medicationList.add(medication);
-        }
+        //  if (!wasFound) {
+        medicationList.add(medication);
     }
 
     public void removeMedication(String medication) {
-        boolean wasFound = false;
+        // boolean wasFound = false;
 
         for (Medication medicament : medicationList) {
             if (medicament.getName().equals(medication)) {
-                wasFound = true;
+                //   wasFound = true;
                 medicationList.remove(medicament);
                 System.out.println("Medicament was removed!");
-                break;
+                return;
             }
         }
-        if (!wasFound) {
-            System.out.println("Medicament cannot be found");
-        }
+        //  if (!wasFound) {
+        System.out.println("Medicament cannot be found");
     }
-
-    public String getRemainingQuantity(String medication) {
-        int usedQuantity = 0;
-        for (Medication medicament : medicationList) {
-            if (medicament.getName().equals(medication))
-                usedQuantity += medicament.getQuantity();
-        }
-        return "The number of " + " is " + usedQuantity;
-    } //will review
 
     public List<Medication> getMedicamentsforUsage(Usage medicationUsage) {
         List<Medication> medicaments = new ArrayList<>();
@@ -79,8 +73,40 @@ public class Treatment {
         }
         return medicaments;
     }
+
+    public List<Medication> getMedicamentsForCurrentTime() {
+        List<Medication> medicamentsForCurrentTime = new ArrayList<>();
+        int currentHour = LocalTime.now().getHour();
+        for (Medication medication : medicationList) {
+            List<TimeOfDay> timesOfDay = medication.getAdministrationMethod().getTimesOfDay();
+            for (TimeOfDay timeOfDay : timesOfDay) {
+                if (timeOfDay.getStartHour() <= currentHour && timeOfDay.getEndHour() > currentHour) {
+                    medicamentsForCurrentTime.add(medication);
+                }
+            }
+        }
+        return medicamentsForCurrentTime;
+    }
+
+    public void takeMedicament(String medication) {
+        for (Medication medication1 : medicationList) {
+            if (medication1.getName().equals(medication)) {
+                int remainingQuantity = medication1.consume();
+                // remainingQuantity--;
+                System.out.println("Medicament taken! The remaining quantity is " + remainingQuantity);
+            }
+        }
+    }
+
+    public String getRemainingQuantity(String medication) {
+        int usedQuantity = 0;
+        for (Medication medicament : medicationList) {
+            if (medicament.getName().equals(medication))
+                usedQuantity += medicament.getQuantity();
+        }
+        return "The number of " + medication + " is " + usedQuantity;
+    }
 }
-// - metoda care sa printeze ce medicamente trebuie luate based on timpul zile
-// - metoda care sa printeze un mesaj atunci cand cantitatea scade sub un anumit nr
-//-  generare raport - lista cu urmatoarele medicamente ce trebuie achizionate
+
+
 
