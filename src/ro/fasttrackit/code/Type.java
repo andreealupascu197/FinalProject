@@ -8,5 +8,6 @@ public enum Type {
     DROPS,
     INHALERS,
     INJECTIONS,
-    PATCHES;
+    PATCHES,
+    EFFERVESCENT;
 }
